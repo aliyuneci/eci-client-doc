@@ -68,6 +68,17 @@ Container:
   Image: centos:8.1.1911
   Command: ["bash", "-c", "while true; do date; sleep 10; done"]
   ImagePullPolicy: IfNotPresent
+  VolumeMount:
+  - Name: nas
+    MountPath: /mnt/nas
+    ReadOnly: false
+Volume:
+- Name: nas
+  Type: NFSVolume
+  NFSVolume:
+    Server: xxxxx.xxxxx.nas.aliyuncs.com
+    Path: /
+    ReadOnly: false
 ImageRegistryCredentials:
 - Server: docker.io
   UserName: jack
@@ -161,8 +172,18 @@ Container:
   Stdin: ""
   StdinOnce: ""
   Tty: ""
-  VolumeMount: null
+  VolumeMount:
+  - Name: nfs
+    MountPath: /mnt/nfs
+    ReadOnly: false
   WorkingDir: ""
+Volume:
+- Name: nfs
+  Type: NFSVolume
+  NFSVolume: 
+    Server: xxxxx.xxxxx.nas.aliyuncs.com
+    Path: /
+    ReadOnly: false
 ContainerGroupName: eci-busybox
 Content: null
 Cpu: "0.25"
@@ -213,7 +234,6 @@ TerminationGracePeriodSeconds: ""
 VSwitchId: vsw-xxx
 VSwitchStrategy: ""
 VkClientVersion: ""
-Volume: null
 ZoneId: ""
 ```
 
